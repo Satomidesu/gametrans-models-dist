@@ -1,17 +1,22 @@
 # gametrans-models-dist
 
-The model files that the **gametrans** desktop app downloads on first launch: screen text recognition,
-and one English → X translation model chosen by the user (26 target languages). After this one download the app works fully offline.
+The files that the **gametrans** desktop app downloads. On first launch: screen text recognition,
+and one English → X translation model chosen by the user (26 target languages). Users who turn on the optional **high-quality mode**
+(Japanese, Chinese, Korean) also download a local AI translation model and the program that runs it (`llm-*.zip`).
+The app goes online only for these downloads; the AI also runs only on the user's PC.
 
-gametrans が初回起動で 1 回だけ落とすモデルの置き場です。文字認識の土台と、使う人が選んだ訳し先 1 つぶんの翻訳モデルだけを落とします。アプリはこのあと通信しません。
+gametrans が落とすファイルの置き場です。初回起動で、文字認識の土台と、使う人が選んだ訳し先 1 つぶんの翻訳モデルだけを落とします。
+高品質モード（日本語・中国語・韓国語）を入にした人だけが、AI の翻訳モデルとそれを動かす部品（`llm-*.zip`）も落とします。
+アプリが通信するのはこの取得のときだけです。AI も PC の中だけで動きます。
 
 - The files are the **release assets of tag `v1`** (one zip per bundle). The app pins every file by SHA-256; do not replace assets under the same tag.
-- These are **model files only**. The gametrans application itself is a separate program under its own license and is not in this repository.
+- These are model files and, for the optional high-quality mode, the unmodified third-party llama.cpp runtime; no gametrans code is included. The gametrans application itself is a separate program under its own license and is not in this repository.
 - No warranty. See each license text for the disclaimer.
 
 ## Licenses — several licenses in one repository
 
-Every translation model below is a **modified work**. For each one, gametrans made the same changes
+Every translation model in the table below (the `mt-*.zip` bundles) is a **modified work**; the optional high-quality mode model
+further down is distributed unmodified. For each `mt-*.zip` model, gametrans made the same changes
 (this is the notice of changes required by Apache-2.0 Section 4(b) and by CC BY / CC BY-SA Section 3(a)(1)(B)):
 
 > Exported from the original weights to ONNX with Hugging Face Optimum (`encoder_model.onnx`, `decoder_model_merged.onnx`),
@@ -63,6 +68,39 @@ PP-OCRv5 text detection / recognition models by PaddlePaddle / PaddleOCR (Baidu)
 `ocr/ch_PP-OCRv5_det_mobile.onnx` and `ocr/ch_PP-OCRv5_rec_mobile.onnx` are the files listed in RapidOCR v3.9.2
 (`python/rapidocr/default_models.yaml`, from https://www.modelscope.cn/models/RapidAI/RapidOCR) and have the same SHA-256 as listed there.
 
+### High-quality mode (optional) — `llm-hy-mt2-1.8b-q4km.zip`, `llm-runtime-b11624-r2.zip`
+
+Downloaded only by users who turn on the high-quality mode (Japanese, Chinese, Korean). The model runs on the user's PC
+as a separate process; nothing is sent over the network.
+
+**`llm-hy-mt2-1.8b-q4km.zip` — Apache License 2.0, unmodified.** `llm/Hy-MT2-1.8B-Q4_K_M.gguf` is the file of the same name
+from https://huggingface.co/tencent/Hy-MT2-1.8B-GGUF (revision `a0c709d9`) by **Tencent**, with the same size and SHA-256 as published there.
+`llm/Hy-MT2-LICENSE.txt` is that repository's `LICENSE.txt` (Apache License 2.0, Copyright (C) 2026 Tencent), byte-identical. The repository has no NOTICE file.
+
+**`llm-runtime-b11624-r2.zip` — MIT, with the bundled components below.** The files needed to run `llama-server`, taken from the official
+llama.cpp release b11624 (https://github.com/ggml-org/llama.cpp/releases/tag/b11624, `llama-b11624-bin-win-vulkan-x64.zip`) by **the ggml authors**.
+Changes: `llama-server.exe` is renamed to `gametrans-llm.exe`, `ggml-vulkan.dll` is moved to `vk/`, and `LICENSE-LLVM-OpenMP` is renamed to
+`LICENSE-LLVM-OpenMP.txt`; all 24 files taken from the release are byte-identical to it, and files the app does not use are left out.
+Six license texts were added: `LICENSE-llama.cpp.txt`, `LICENSE-cpp-httplib.txt`, `LICENSE-nlohmann-json.txt` and `LICENSE-BoringSSL.txt`,
+and two notice files that gametrans assembled from the upstream license texts (`LICENSE-llama.cpp-third-party.txt`, `LICENSE-llama.cpp-webui.txt`),
+because the official release ships only the LLVM OpenMP text.
+The Microsoft Visual C++ runtime files are **not** in this zip; when Windows has no copies or only older ones, the gametrans app copies its own
+installed copies into the folder.
+The license texts are in the zip under `llm/runtime/` (copies are also in this repository under `LICENSES/llama.cpp-b11624/`):
+
+| Component | License | File in the zip |
+|---|---|---|
+| llama.cpp / ggml (the ggml authors) | MIT | `LICENSE-llama.cpp.txt` |
+| cpp-httplib (yhirose), built into llama-server | MIT | `LICENSE-cpp-httplib.txt` |
+| nlohmann/json (Niels Lohmann), built into llama-server | MIT | `LICENSE-nlohmann-json.txt` |
+| BoringSSL 0.20260929.0, built into `llama-server-impl.dll` and `llama-common.dll` | Apache License 2.0 | `LICENSE-BoringSSL.txt` |
+| LLVM OpenMP (`libomp.dll`, as shipped in the llama.cpp release zip) | Apache License 2.0 WITH LLVM-exception | `LICENSE-LLVM-OpenMP.txt` |
+| Other third-party code compiled into the DLLs: llamafile tinyBLAS (Mozilla), YaRN, FP16 (Maratyszcza), the UTF-8 decoder (Hoehrmann) and Grisu2 (Loitsch) inside nlohmann/json, ggllm.cpp, Pillow resampling, Unicode data tables, Vulkan-Headers (Khronos), rotate-bits, the C++ port of Hugging Face's Jinja engine, a Microsoft Learn code sample, plus precautionary entries | MIT, MIT-CMU, Unicode-3.0, Apache-2.0 OR MIT and others | `LICENSE-llama.cpp-third-party.txt` |
+| The llama.cpp web UI compiled into `llama-server-impl.dll` (gametrans starts the server with `--no-webui`, so it is never shown): 388 entries: 365 npm packages, code embedded in them or copied into the UI source, and the KaTeX fonts | MIT, ISC, BSD, Apache-2.0, OFL-1.1 and others | `LICENSE-llama.cpp-webui.txt` |
+
+`mtmd.dll` also contains miniaudio and stb_image, and `mtmd.dll` and `llama-common.dll` contain subprocess.h; they are used under their
+public-domain option (Unlicense), so no notice is required (listed in Part C of `LICENSE-llama.cpp-third-party.txt`).
+
 ## Files and SHA-256
 
 | File | For | Bytes | SHA-256 |
@@ -94,8 +132,10 @@ PP-OCRv5 text detection / recognition models by PaddlePaddle / PaddleOCR (Baidu)
 | `mt-opus-mt-en-fi.zip` | Suomi | 116,020,299 | `d7ded6206f6e8fa010e52a8d1fe2e0eb424febd9661d231045daa26bc6548001` |
 | `mt-hplt-en-nb.zip` | Norsk bokmål | 115,996,337 | `2eade47235efc8e449cdb200cbd959d2760157bfe4627504044d234190dbe903` |
 | `mt-hplt-v1-en-ar.zip` | العربية | 117,041,361 | `757c012ee9510266a02ebc6f672a11a4ec5317bd614112b70936499463e30708` |
+| `llm-hy-mt2-1.8b-q4km.zip` | high-quality mode: AI model (optional) | 1,133,092,359 | `5eddc2d3fb8fe62ea6d54b601aed95e0d39a2b3b61cdf6082ca094d45c5623d0` |
+| `llm-runtime-b11624-r2.zip` | high-quality mode: runtime (optional) | 86,667,784 | `64e00f2788190f110f8e59254ff9386116dfbeb19c7dbeeeedb4d628e4105105` |
 
-27 files, 2,899,758,495 bytes in total. Each zip is uncompressed (stored) with fixed timestamps, so its size and bytes are
+29 files, 4,119,518,638 bytes in total. Each zip is uncompressed (stored) with fixed timestamps, so its size and bytes are
 determined by the files inside; the app checks the zip size before reading it and the SHA-256 of every file after extracting it.
 
 Download URL: `https://github.com/Satomidesu/gametrans-models-dist/releases/download/v1/<File>`

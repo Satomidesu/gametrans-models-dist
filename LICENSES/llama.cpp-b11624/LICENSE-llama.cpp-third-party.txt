@@ -1,0 +1,1205 @@
+THIRD-PARTY NOTICES - ADDITIONAL (native code)
+==============================================
+
+These notices apply to the llama.cpp release b11624 binaries redistributed
+unmodified in this folder (gametrans-llm.exe = llama-server.exe renamed;
+vk\ggml-vulkan.dll = ggml-vulkan.dll moved), as published in
+llama-b11624-bin-win-vulkan-x64.zip at
+https://github.com/ggml-org/llama.cpp/releases/tag/b11624
+
+They SUPPLEMENT, and do not replace, the five notice files already shipped:
+  LICENSE-llama.cpp.txt      (llama.cpp / ggml, MIT, "The ggml authors")
+  LICENSE-cpp-httplib.txt    (cpp-httplib 0.60.1, MIT)
+  LICENSE-nlohmann-json.txt  (JSON for Modern C++ 3.12.0, MIT, Niels Lohmann)
+  LICENSE-BoringSSL.txt      (BoringSSL 0.20260929.0, Apache-2.0)
+  LICENSE-LLVM-OpenMP.txt    (LLVM OpenMP 20.1.8 runtime, libomp.dll)
+
+Part A lists third-party code compiled into the binaries whose licence
+requires a notice and whose copyright holder is not named in the five files.
+Part B lists code where the obligation is uncertain (adapted algorithms,
+format-decoding expressions, constants, code not linked); it is included
+as a precaution. Part C lists components that require no notice, for
+information. The full text of the Apache License 2.0 referenced in Part B
+is reproduced in the Appendix.
+
+The web UI (HTML/JavaScript/CSS/fonts) embedded in llama-server-impl.dll is not
+covered by this file; its notices are in LICENSE-llama.cpp-webui.txt.
+
+==============================================================================
+PART A - NOTICES REQUIRED
+
+==============================================================================
+A1. llamafile tinyBLAS matrix-multiplication kernels (ggml/src/ggml-cpu/llamafile/sgemm.cpp)
+    Version:  as vendored in llama.cpp b11624 (commit af0579c78a07a555d84830d01da7b61cfadbc7ef)
+    Licence:  MIT
+    Binaries: ggml-cpu-alderlake.dll, ggml-cpu-cannonlake.dll, ggml-cpu-cascadelake.dll,
+              ggml-cpu-cooperlake.dll, ggml-cpu-haswell.dll, ggml-cpu-icelake.dll,
+              ggml-cpu-ivybridge.dll, ggml-cpu-piledriver.dll, ggml-cpu-sandybridge.dll,
+              ggml-cpu-sapphirerapids.dll, ggml-cpu-skylakex.dll, ggml-cpu-sse42.dll,
+              ggml-cpu-x64.dll, ggml-cpu-zen4.dll
+    Text from: llama.cpp b11624 ggml/src/ggml-cpu/llamafile/sgemm.cpp, lines 1-21 (comment markers removed)
+    Note:     Copyright holder (Mozilla Foundation) is not the ggml authors; built with GGML_LLAMAFILE=ON.
+------------------------------------------------------------------------------
+Copyright 2024 Mozilla Foundation
+
+Permission is hereby granted, free of charge, to any person obtaining
+a copy of this software and associated documentation files (the
+"Software"), to deal in the Software without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Software, and to
+permit persons to whom the Software is furnished to do so, subject to
+the following conditions:
+
+The above copyright notice and this permission notice shall be
+included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS
+BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN
+ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+==============================================================================
+A2. YaRN rotary-embedding scaling (rope_yarn / ggml_rope_yarn_corr_dims; rope_funcs.glsl)
+    Version:  jquesnelle/yarn, LICENSE at commit 995db5b575e75230b3384d658f8b944c9662f775
+    Licence:  MIT
+    Binaries: ggml-cpu-alderlake.dll, ggml-cpu-cannonlake.dll, ggml-cpu-cascadelake.dll,
+              ggml-cpu-cooperlake.dll, ggml-cpu-haswell.dll, ggml-cpu-icelake.dll,
+              ggml-cpu-ivybridge.dll, ggml-cpu-piledriver.dll, ggml-cpu-sandybridge.dll,
+              ggml-cpu-sapphirerapids.dll, ggml-cpu-skylakex.dll, ggml-cpu-sse42.dll,
+              ggml-cpu-x64.dll, ggml-cpu-zen4.dll,
+              ggml-base.dll, vk\ggml-vulkan.dll (SPIR-V shaders)
+    Text from: https://github.com/jquesnelle/yarn/blob/995db5b575e75230b3384d658f8b944c9662f775/LICENSE
+    Note:     llama.cpp ggml/src/ggml-cpu/ops.cpp states: "YaRN algorithm based on
+              LlamaYaRNScaledRotaryEmbedding.py from https://github.com/jquesnelle/yarn
+              MIT licensed. Copyright (c) 2023 Jeffrey Quesnelle and Bowen Peng."
+------------------------------------------------------------------------------
+MIT License
+
+Copyright (c) 2023 Jeffrey Quesnelle and Bowen Peng
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+==============================================================================
+A3. FP16 half-precision conversion (ggml_compute_fp16_to_fp32 / ggml_compute_fp32_to_fp16 in ggml-impl.h)
+    Version:  Maratyszcza/FP16, LICENSE at commit 782eea126dc5c755827be751a099eb01826175cf
+    Licence:  MIT
+    Binaries: ggml-base.dll, ggml-cpu-alderlake.dll, ggml-cpu-cannonlake.dll, ggml-cpu-cascadelake.dll,
+              ggml-cpu-cooperlake.dll, ggml-cpu-haswell.dll, ggml-cpu-icelake.dll,
+              ggml-cpu-ivybridge.dll, ggml-cpu-piledriver.dll, ggml-cpu-sandybridge.dll,
+              ggml-cpu-sapphirerapids.dll, ggml-cpu-skylakex.dll, ggml-cpu-sse42.dll,
+              ggml-cpu-x64.dll, ggml-cpu-zen4.dll
+    Text from: https://github.com/Maratyszcza/FP16/blob/782eea126dc5c755827be751a099eb01826175cf/LICENSE
+    Note:     ggml/src/ggml-impl.h reproduces fp16_ieee_to_fp32_value / fp16_ieee_from_fp32_value
+              from FP16 ("ref: https://github.com/Maratyszcza/FP16") without carrying its notice.
+------------------------------------------------------------------------------
+The MIT License (MIT)
+
+Copyright (c) 2017 Facebook Inc.
+Copyright (c) 2017 Georgia Institute of Technology
+Copyright 2019 Google LLC
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+==============================================================================
+A4. UTF-8 decoder by Bjoern Hoehrmann (inside nlohmann/json serializer)
+    Version:  as embedded in JSON for Modern C++ 3.12.0
+    Licence:  MIT
+    Binaries: llama-common.dll
+    Text from: copyright line: llama.cpp b11624 vendor/nlohmann/json.hpp (SPDX-FileCopyrightText);
+              MIT text: https://github.com/nlohmann/json/blob/v3.12.0/LICENSES/MIT.txt
+    Note:     Embedded in JSON for Modern C++ 3.12.0 (vendor/nlohmann/json.hpp). LICENSE-nlohmann-json.txt
+              names only Niels Lohmann. Upstream README (v3.12.0, section License) states:
+              "The class contains the UTF-8 Decoder from Bjoern Hoehrmann which is licensed
+              under the MIT License".
+------------------------------------------------------------------------------
+MIT License
+
+Copyright (c) 2008-2009 Björn Hoehrmann <bjoern@hoehrmann.de>
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+==============================================================================
+A5. Grisu2 floating-point formatting by Florian Loitsch (inside nlohmann/json to_chars)
+    Version:  as embedded in JSON for Modern C++ 3.12.0
+    Licence:  MIT
+    Binaries: llama-common.dll
+    Text from: copyright line: llama.cpp b11624 vendor/nlohmann/json.hpp (SPDX-FileCopyrightText);
+              MIT text: https://github.com/nlohmann/json/blob/v3.12.0/LICENSES/MIT.txt
+    Note:     Embedded in JSON for Modern C++ 3.12.0 (vendor/nlohmann/json.hpp). LICENSE-nlohmann-json.txt
+              names only Niels Lohmann. Upstream README (v3.12.0, section License) states:
+              "The class contains a slightly modified version of the Grisu2 algorithm from
+              Florian Loitsch which is licensed under the MIT License".
+------------------------------------------------------------------------------
+MIT License
+
+Copyright (c) 2009 Florian Loitsch <https://florian.loitsch.com/>
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+==============================================================================
+A6. ggllm.cpp BPE tokenizer (adapted into llama.cpp src/llama-vocab.cpp)
+    Version:  cmp-nct/ggllm.cpp, LICENSE at commit 3e4c0214c749df55c98c4cc161c7df862b4bb66c (unchanged at HEAD 0dc65eb)
+    Licence:  MIT
+    Binaries: llama.dll
+    Text from: https://github.com/cmp-nct/ggllm.cpp/blob/3e4c0214c749df55c98c4cc161c7df862b4bb66c/LICENSE
+    Note:     src/llama-vocab.cpp: "BPE tokenizer / adapted from https://github.com/cmp-nct/ggllm.cpp [MIT License]".
+------------------------------------------------------------------------------
+MIT License
+
+Copyright (c) 2023 https://github.com/cmp-nct
+
+This project includes work that is Copyright (c) 2023 by Georgi Gerganov 
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+==============================================================================
+A7. Pillow image resampling (adapted from src/libImaging/Resample.c into tools/mtmd/mtmd-image.cpp)
+    Version:  python-pillow/Pillow 12.3.0 (LICENSE identical in 12.2.0; adaptation landed Aug 2026)
+    Licence:  MIT-CMU (HPND)
+    Binaries: mtmd.dll
+    Text from: https://github.com/python-pillow/Pillow/blob/12.3.0/LICENSE
+    Note:     mtmd-image.cpp: "Pillow-compatible separable resampling ... Adapted from
+              https://github.com/python-pillow/Pillow/blob/main/src/libImaging/Resample.c".
+              (Pillow 12.0.0-12.1.1 spell the third holder "Jeffrey A. Clark and contributors".)
+------------------------------------------------------------------------------
+The Python Imaging Library (PIL) is
+
+    Copyright © 1997-2011 by Secret Labs AB
+    Copyright © 1995-2011 by Fredrik Lundh and contributors
+
+Pillow is the friendly PIL fork. It is
+
+    Copyright © 2010 by Jeffrey 'Alex' Clark and contributors
+
+Like PIL, Pillow is licensed under the open source MIT-CMU License:
+
+By obtaining, using, and/or copying this software and/or its associated
+documentation, you agree that you have read, understood, and will comply
+with the following terms and conditions:
+
+Permission to use, copy, modify and distribute this software and its
+documentation for any purpose and without fee is hereby granted,
+provided that the above copyright notice appears in all copies, and that
+both that copyright notice and this permission notice appear in supporting
+documentation, and that the name of Secret Labs AB or the author not be
+used in advertising or publicity pertaining to distribution of the software
+without specific, written prior permission.
+
+SECRET LABS AB AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH REGARD TO THIS
+SOFTWARE, INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS.
+IN NO EVENT SHALL SECRET LABS AB OR THE AUTHOR BE LIABLE FOR ANY SPECIAL,
+INDIRECT OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM
+LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE
+OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
+PERFORMANCE OF THIS SOFTWARE.
+
+==============================================================================
+A8. Unicode Character Database derived tables (src/unicode-data.cpp, generated by scripts/gen-unicode-data.py)
+    Version:  UCD data (normalization tables state Unicode 16.0.0); licence text from unicode-org/unicodetools tag final-16.0-20240912
+    Licence:  Unicode-3.0
+    Binaries: llama.dll
+    Text from: https://github.com/unicode-org/unicodetools/blob/final-16.0-20240912/LICENSE
+    Note:     Tables of code-point flags, case mappings, NFD/composition data generated from UnicodeData.txt.
+------------------------------------------------------------------------------
+UNICODE LICENSE V3
+
+COPYRIGHT AND PERMISSION NOTICE
+
+Copyright © 2001-2024 Unicode, Inc.
+
+NOTICE TO USER: Carefully read the following legal agreement. BY
+DOWNLOADING, INSTALLING, COPYING OR OTHERWISE USING DATA FILES, AND/OR
+SOFTWARE, YOU UNEQUIVOCALLY ACCEPT, AND AGREE TO BE BOUND BY, ALL OF THE
+TERMS AND CONDITIONS OF THIS AGREEMENT. IF YOU DO NOT AGREE, DO NOT
+DOWNLOAD, INSTALL, COPY, DISTRIBUTE OR USE THE DATA FILES OR SOFTWARE.
+
+Permission is hereby granted, free of charge, to any person obtaining a
+copy of data files and any associated documentation (the "Data Files") or
+software and any associated documentation (the "Software") to deal in the
+Data Files or Software without restriction, including without limitation
+the rights to use, copy, modify, merge, publish, distribute, and/or sell
+copies of the Data Files or Software, and to permit persons to whom the
+Data Files or Software are furnished to do so, provided that either (a)
+this copyright and permission notice appear with all copies of the Data
+Files or Software, or (b) this copyright and permission notice appear in
+associated Documentation.
+
+THE DATA FILES AND SOFTWARE ARE PROVIDED "AS IS", WITHOUT WARRANTY OF ANY
+KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT OF
+THIRD PARTY RIGHTS.
+
+IN NO EVENT SHALL THE COPYRIGHT HOLDER OR HOLDERS INCLUDED IN THIS NOTICE
+BE LIABLE FOR ANY CLAIM, OR ANY SPECIAL INDIRECT OR CONSEQUENTIAL DAMAGES,
+OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS,
+WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION,
+ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THE DATA
+FILES OR SOFTWARE.
+
+Except as contained in this notice, the name of a copyright holder shall
+not be used in advertising or otherwise to promote the sale, use or other
+dealings in these Data Files or Software without prior written
+authorization of the copyright holder.
+
+SPDX-License-Identifier: Unicode-3.0
+
+==============================================================================
+A9. Vulkan-Headers / Vulkan-Hpp C++ bindings (vulkan.hpp, vulkan_core.h)
+    Version:  Vulkan SDK 1.4.357.0 = KhronosGroup/Vulkan-Headers tag vulkan-sdk-1.4.357.0 (commit e3b1eec08173d6b825cd3ac88c885a63b621504a, VK_HEADER_VERSION 357)
+    Licence:  Apache-2.0 OR MIT (MIT elected)
+    Binaries: vk\ggml-vulkan.dll
+    Text from: Vulkan-Headers vulkan-sdk-1.4.357.0: include/vulkan/vulkan.hpp (lines 1-2),
+              include/vulkan/vulkan_core.h (lines 4-8), LICENSE.md, LICENSES/MIT.txt
+    Note:     vulkan.hpp inline code (DispatchLoaderDynamic, resultCheck, vk::Result error category) is
+              compiled in: the DLL contains strings such as "vk::Device::createBuffer" and "vk::createInstance".
+------------------------------------------------------------------------------
+From include/vulkan/vulkan.hpp:
+// Copyright 2015-2026 The Khronos Group Inc.
+// SPDX-License-Identifier: Apache-2.0 OR MIT
+
+From include/vulkan/vulkan_core.h:
+/*
+** Copyright 2015-2026 The Khronos Group Inc.
+**
+** SPDX-License-Identifier: Apache-2.0 OR MIT
+*/
+
+--- LICENSE.md ---
+Copyright 2015-2026 The Khronos Group Inc.
+
+Files in this repository fall under one of these licenses:
+
+- `Apache-2.0`
+- `MIT`
+
+Note: With the exception of `parse_dependency.py`, which is based on an
+external file, files using the `MIT` license also fall under `Apache-2.0`.
+Example:
+
+```
+SPDX-License-Identifier: Apache-2.0 OR MIT
+```
+
+Full license text of these licenses is available at:
+
+  * Apache-2.0: https://opensource.org/licenses/Apache-2.0
+  * MIT: https://opensource.org/licenses/MIT
+
+--- LICENSES/MIT.txt ---
+MIT License
+
+Copyright (c) 2015-2023 The Khronos Group Inc.
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+==============================================================================
+A10. rotate-bits (vendor/hash/rotate-bits/rotate-bits.h, used by the vendored SHA-256)
+    Version:  as vendored in llama.cpp b11624 (commit af0579c78a07a555d84830d01da7b61cfadbc7ef)
+    Licence:  MIT
+    Binaries: mtmd.dll
+    Text from: llama.cpp b11624 vendor/hash/rotate-bits/LICENSE.md
+    Note:     Header of rotate macros; vendored by llama.cpp with its own LICENSE.md, so its notice is carried here.
+------------------------------------------------------------------------------
+MIT License
+
+Copyright (c) 2021 William Casarin <jb55@jb55.com>
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+==============================================================================
+A11. Hugging Face Jinja template engine (@huggingface/jinja), ported to C++ as common/jinja
+    Version:  huggingface.js packages/jinja (port as found in llama.cpp b11624 common/jinja)
+    Licence:  MIT
+    Binaries: llama-common.dll
+    Text from: https://github.com/huggingface/huggingface.js/blob/main/LICENSE
+    Note:     common/jinja/README.md: "originally inspired by huggingface.js's jinja package"; the token table and many
+              comments of lexer/parser/runtime/value follow packages/jinja/src verbatim, so the code is treated as a port.
+------------------------------------------------------------------------------
+MIT License
+
+Copyright (c) 2023 Hugging Face
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+==============================================================================
+A12. Microsoft Learn __cpuid / __cpuidex example (InstructionSet class), adapted as cpuid_x86
+    Version:  MicrosoftDocs/cpp-docs docs/intrinsics/cpuid-cpuidex.md (as adapted in llama.cpp b11624 ggml/src/ggml-cpu/arch/x86/cpu-feats.cpp)
+    Licence:  MIT
+    Binaries: ggml-cpu-alderlake.dll, ggml-cpu-cannonlake.dll, ggml-cpu-cascadelake.dll,
+              ggml-cpu-cooperlake.dll, ggml-cpu-haswell.dll, ggml-cpu-icelake.dll,
+              ggml-cpu-ivybridge.dll, ggml-cpu-piledriver.dll, ggml-cpu-sandybridge.dll,
+              ggml-cpu-sapphirerapids.dll, ggml-cpu-skylakex.dll, ggml-cpu-sse42.dll,
+              ggml-cpu-x64.dll, ggml-cpu-zen4.dll
+    Text from: https://github.com/MicrosoftDocs/cpp-docs/blob/main/LICENSE-CODE (code samples in that repository)
+    Note:     The feature accessor list, its order, the bitset layout and the constructor comments match the documentation sample.
+------------------------------------------------------------------------------
+The MIT License (MIT)
+Copyright (c) Microsoft Corporation
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and 
+associated documentation files (the "Software"), to deal in the Software without restriction, 
+including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, 
+and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, 
+subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial 
+portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT 
+NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. 
+IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, 
+WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE 
+SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+==============================================================================
+PART B - PRECAUTIONARY NOTICES (obligation uncertain; included to avoid omission)
+
+==============================================================================
+B1. Arm Optimized Routines (vectorised expf, adapted as ggml_v_expf for AVX-512 / AVX2 / SSE2)
+    Version:  ARM-software/optimized-routines v24.01 (LICENSE identical at HEAD 2ee4b0d)
+    Licence:  MIT OR Apache-2.0 WITH LLVM-exception (MIT text reproduced)
+    Binaries: ggml-cpu-alderlake.dll, ggml-cpu-cannonlake.dll, ggml-cpu-cascadelake.dll,
+              ggml-cpu-cooperlake.dll, ggml-cpu-haswell.dll, ggml-cpu-icelake.dll,
+              ggml-cpu-ivybridge.dll, ggml-cpu-piledriver.dll, ggml-cpu-sandybridge.dll,
+              ggml-cpu-sapphirerapids.dll, ggml-cpu-skylakex.dll, ggml-cpu-sse42.dll,
+              ggml-cpu-x64.dll, ggml-cpu-zen4.dll
+    Text from: https://github.com/ARM-software/optimized-routines/blob/v24.01/LICENSE (MIT part, verbatim)
+    Note:     ggml/src/ggml-cpu/vec.h: "adapted from arm limited optimized routine". Under the
+              Apache-2.0 WITH LLVM-exception option no notice would be needed for object code.
+------------------------------------------------------------------------------
+MIT OR Apache-2.0 WITH LLVM-exception
+=====================================
+
+
+MIT License
+-----------
+
+Copyright (c) 1999-2022, Arm Limited.
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+==============================================================================
+B2. SPIRV-Headers (spirv/unified1/spirv.hpp: SPIR-V enumerants and constants)
+    Version:  KhronosGroup/SPIRV-Headers tag vulkan-sdk-1.4.357.0 (commit 29981f65241605e08b0ede4cfeb999fe3b723c6a)
+    Licence:  MIT (Khronos variant)
+    Binaries: vk\ggml-vulkan.dll
+    Text from: SPIRV-Headers vulkan-sdk-1.4.357.0: include/spirv/unified1/spirv.hpp (lines 1-7), LICENSE (first section)
+    Note:     Only constants (spv::OpCodeMask, opcodes) reach the binary.
+------------------------------------------------------------------------------
+From include/spirv/unified1/spirv.hpp:
+// Copyright: 2014-2024 The Khronos Group Inc.
+// License: MIT
+// 
+// MODIFICATIONS TO THIS FILE MAY MEAN IT NO LONGER ACCURATELY REFLECTS
+// KHRONOS STANDARDS. THE UNMODIFIED, NORMATIVE VERSIONS OF KHRONOS
+// SPECIFICATIONS AND HEADER INFORMATION ARE LOCATED AT
+// https://www.khronos.org/registry/
+
+--- LICENSE (section covering spirv.hpp) ---
+Files: All files except for those called out below.
+Copyright (c) 2015-2024 The Khronos Group Inc.
+
+Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and/or associated documentation files (the
+"Materials"), to deal in the Materials without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Materials, and to
+permit persons to whom the Materials are furnished to do so, subject to
+the following conditions:
+
+The above copyright notice and this permission notice shall be included
+in all copies or substantial portions of the Materials.
+
+MODIFICATIONS TO THIS FILE MAY MEAN IT NO LONGER ACCURATELY REFLECTS
+KHRONOS STANDARDS. THE UNMODIFIED, NORMATIVE VERSIONS OF KHRONOS
+SPECIFICATIONS AND HEADER INFORMATION ARE LOCATED AT
+   https://www.khronos.org/registry/
+
+THE MATERIALS ARE PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
+CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+MATERIALS OR THE USE OR OTHER DEALINGS IN THE MATERIALS.
+
+==============================================================================
+B3. fiat-crypto generated field arithmetic inside BoringSSL (third_party/fiat), and BoringSSL AUTHORS
+    Version:  BoringSSL 0.20260929.0 (fiat-crypto upstream commit 6ccc6638716d4632304baf1adbb5c47c3a12ea6f)
+    Licence:  Apache-2.0
+    Binaries: llama-common.dll, llama-server-impl.dll (BoringSSL is statically linked into both)
+    Text from: https://github.com/google/boringssl/tree/0.20260929.0/third_party/fiat (LICENSE, AUTHORS) and /AUTHORS
+    Note:     LICENSE-BoringSSL.txt (identical to BoringSSL 0.20260929.0 LICENSE) already contains the Apache-2.0
+              text, which covers this code; the fiat copyright line and author lists are not in it.
+------------------------------------------------------------------------------
+--- third_party/fiat/LICENSE ---
+The Apache License, Version 2.0 (Apache-2.0)
+
+Copyright 2015-2020 the fiat-crypto authors (see the AUTHORS file)
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+
+--- third_party/fiat/AUTHORS ---
+# This is the official list of fiat-crypto authors for copyright purposes.
+# This file is distinct from the CONTRIBUTORS files.
+# See the latter for an explanation.
+
+# Names should be added to this file as one of
+#     Organization's name
+#     Individual's name <submission email address>
+#     Individual's name <submission email address> <email2> <emailN>
+# See CONTRIBUTORS for the meaning of multiple email addresses.
+
+# Please keep the list sorted.
+
+Andres Erbsen <andreser@mit.edu>
+Google Inc.
+Jade Philipoom <jadep@mit.edu> <jade.philipoom@gmail.com>
+Massachusetts Institute of Technology
+Zoe Paraskevopoulou <zoe.paraskevopoulou@gmail.com>
+
+--- AUTHORS (BoringSSL) ---
+# This is the list of BoringSSL's significant contributors.
+#
+# This does not necessarily list everyone who has contributed code,
+# especially since many employees of one corporation may be contributing.
+# To see the full list of contributors, see the revision history in
+# source control.
+Google LLC
+Brian Smith
+Apple Inc
+
+# Additionally, much of the code in BoringSSL is derived from code in the
+# OpenSSL project. We thank the OpenSSL project’s contributors for their
+# work. Some of these contributors are listed below. For the full list of
+# these contributors, see AUTHORS.md in OpenSSL and the revision history
+# in OpenSSL’s source control.
+OpenSSL Software Services, Inc.
+OpenSSL Software Foundation, Inc.
+Andy Polyakov
+Ben Laurie
+Ben Kaduk
+Bernd Edlinger
+Bodo Möller
+David Benjamin
+David von Oheimb
+Dmitry Belyavskiy (Дмитрий Белявский)
+Emilia Käsper
+Eric Young
+Geoff Thorpe
+Holger Reif
+Kurt Roeckx
+Lutz Jänicke
+Mark J. Cox
+Matt Caswell
+Matthias St. Pierre
+Nicola Tuveri
+Nils Larsch
+Patrick Steuer
+Paul Dale
+Paul C. Sutton
+Paul Yang
+Ralf S. Engelschall
+Rich Salz
+Richard Levitte
+Shane Lontis
+Stephen Henson
+Steve Marquess
+Tim Hudson
+Tomáš Mráz
+Ulf Möller
+Viktor Dukhovni
+
+==============================================================================
+B4. darts-clone double-array unit decoding (xcda_array_view in src/llama-vocab.cpp)
+    Version:  s-yata/darts-clone, COPYING.md at commit 87b71afd6cf784953e3c08f24c64203397f3b724
+    Licence:  BSD-2-Clause
+    Binaries: llama.dll
+    Text from: https://github.com/s-yata/darts-clone/blob/87b71afd6cf784953e3c08f24c64203397f3b724/COPYING.md
+    Note:     get_base/get_lcheck/get_leaf/get_value use the same bit expressions as darts-clone
+              DoubleArrayUnit::offset/label/has_leaf/value, to read SentencePiece precompiled charsmaps.
+------------------------------------------------------------------------------
+# The BSD 2-clause license
+
+Copyright (c) 2008-2014, Susumu Yata
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
+
+* Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+* Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+==============================================================================
+B5. OpenAI Whisper log-mel spectrogram reference (tools/mtmd/mtmd-audio.cpp)
+    Version:  openai/whisper, LICENSE at commit 86098128c0b4f24f0e2aa2994de830614b474227
+    Licence:  MIT
+    Binaries: mtmd.dll
+    Text from: https://github.com/openai/whisper/blob/86098128c0b4f24f0e2aa2994de830614b474227/LICENSE
+    Note:     mtmd-audio.cpp: "ref: https://github.com/openai/whisper/blob/main/whisper/audio.py#L110-L157";
+              the code itself is taken from whisper.cpp (MIT, The ggml authors, covered by LICENSE-llama.cpp.txt).
+------------------------------------------------------------------------------
+MIT License
+
+Copyright (c) 2022 OpenAI
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+==============================================================================
+B6. xxHash (vendor/hash/xxhash)
+    Version:  0.8.3 as vendored in llama.cpp b11624 (commit af0579c78a07a555d84830d01da7b61cfadbc7ef)
+    Licence:  BSD-2-Clause
+    Binaries: none found: compiled into the vendor-hash static library, but no XXH64/XXH3 constants are present in
+              any shipped binary (only SHA-256 is referenced by mtmd)
+    Text from: llama.cpp b11624 vendor/hash/xxhash/LICENSE (source header reads "Copyright (C) 2012-2023 Yann Collet")
+    Note:     Listed only in case a rebuild links it.
+------------------------------------------------------------------------------
+xxHash Library
+Copyright (c) 2012-2021 Yann Collet
+All rights reserved.
+
+BSD 2-Clause License (https://www.opensource.org/licenses/bsd-license.php)
+
+Redistribution and use in source and binary forms, with or without modification,
+are permitted provided that the following conditions are met:
+
+* Redistributions of source code must retain the above copyright notice, this
+  list of conditions and the following disclaimer.
+
+* Redistributions in binary form must reproduce the above copyright notice, this
+  list of conditions and the following disclaimer in the documentation and/or
+  other materials provided with the distribution.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
+ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+(INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
+ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+==============================================================================
+B7. SentencePiece unigram (Viterbi) tokenization algorithm (llm_tokenizer_ugm in src/llama-vocab.cpp)
+    Version:  google/sentencepiece v0.2.2 (source headers: "Copyright 2016 Google Inc.")
+    Licence:  Apache-2.0
+    Binaries: llama.dll
+    Text from: https://github.com/google/sentencepiece/blob/v0.2.2/LICENSE (full text in the Appendix)
+    Note:     llama-vocab.cpp: "This implementation is based on SentencePiece optimized Viterbi algorithm".
+------------------------------------------------------------------------------
+Copyright 2016 Google Inc.
+
+Licensed under the Apache License, Version 2.0. The full licence text is
+reproduced in the APPENDIX at the end of this file.
+
+==============================================================================
+B8. Microsoft STL threading code derived from William E. Kempf's work
+    Version:  microsoft/STL tag vs-2022-17.14 (msvcp140.dll in this folder is 14.44.35211.0 = VS 2022 17.14)
+    Licence:  Kempf permissive notice (HPND-style), as reproduced in the STL NOTICE.txt
+    Binaries: msvcp140.dll (placed in this folder by gametrans from its own installation only when Windows has
+              no copy or an older one; NOT part of the llama.cpp zip or of the gametrans runtime download); STL headers used by the
+              llama.cpp DLLs (xthreads.h, __msvc_threads_core.hpp) contribute declarations only
+    Text from: https://github.com/microsoft/STL/blob/vs-2022-17.14/NOTICE.txt, lines 69-83
+    Note:     The redistributable DLL is licensed by Microsoft under the Visual Studio terms; this notice is
+              listed because the STL's own NOTICE.txt attaches it to cond.cpp, mutex.cpp, cthread.cpp, xtime.cpp.
+------------------------------------------------------------------------------
+/*
+* This file is derived from software bearing the following
+* restrictions:
+*
+* (c) Copyright William E. Kempf 2001
+*
+* Permission to use, copy, modify, distribute and sell this
+* software and its documentation for any purpose is hereby
+* granted without fee, provided that the above copyright
+* notice appear in all copies and that both that copyright
+* notice and this permission notice appear in supporting
+* documentation. William E. Kempf makes no representations
+* about the suitability of this software for any purpose.
+* It is provided "as is" without express or implied warranty.
+*/
+
+==============================================================================
+B9. DeepSeek-V4 image preprocessing (inference/image_processor.py), ported in tools/mtmd/mtmd-image.cpp and clip.cpp
+    Version:  deepseek-ai/DeepSeek-V4-Flash on Hugging Face (repository licence: MIT)
+    Licence:  MIT
+    Binaries: mtmd.dll
+    Text from: https://huggingface.co/deepseek-ai/DeepSeek-V4-Flash/blob/main/LICENSE
+    Note:     mtmd-image.cpp: "port of load_image / safe_resize / solve_resize_ratio / grid_tokens from inference/image_processor.py".
+              The licence of that single file was not checked separately; the repository's MIT licence is reproduced as a precaution.
+------------------------------------------------------------------------------
+MIT License
+
+Copyright (c) 2023 DeepSeek
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+==============================================================================
+PART C - NO NOTICE REQUIRED (public domain / no-attribution / covered elsewhere), for information
+
+==============================================================================
+C1. miniaudio (audio decoding incl. dr_wav / dr_flac / dr_mp3)
+    Version:  0.11.25 (2026-03-04), as vendored in llama.cpp b11624 (commit af0579c78a07a555d84830d01da7b61cfadbc7ef)
+    Licence:  Unlicense OR MIT-0
+    Binaries: mtmd.dll
+    Text from: llama.cpp b11624 vendor/miniaudio/miniaudio.h (licence block at end of file)
+------------------------------------------------------------------------------
+This software is available as a choice of the following licenses. Choose
+whichever you prefer.
+
+===============================================================================
+ALTERNATIVE 1 - Public Domain (www.unlicense.org)
+===============================================================================
+This is free and unencumbered software released into the public domain.
+
+Anyone is free to copy, modify, publish, use, compile, sell, or distribute this
+software, either in source code form or as a compiled binary, for any purpose,
+commercial or non-commercial, and by any means.
+
+In jurisdictions that recognize copyright laws, the author or authors of this
+software dedicate any and all copyright interest in the software to the public
+domain. We make this dedication for the benefit of the public at large and to
+the detriment of our heirs and successors. We intend this dedication to be an
+overt act of relinquishment in perpetuity of all present and future rights to
+this software under copyright law.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN
+ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+For more information, please refer to <http://unlicense.org/>
+
+===============================================================================
+ALTERNATIVE 2 - MIT No Attribution
+===============================================================================
+Copyright 2026 David Reid
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of
+this software and associated documentation files (the "Software"), to deal in
+the Software without restriction, including without limitation the rights to
+use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies
+of the Software, and to permit persons to whom the Software is furnished to do
+so.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+==============================================================================
+C2. stb_image
+    Version:  v2.30, as vendored in llama.cpp b11624 (commit af0579c78a07a555d84830d01da7b61cfadbc7ef)
+    Licence:  MIT OR Unlicense (public domain alternative elected)
+    Binaries: mtmd.dll
+    Text from: llama.cpp b11624 vendor/stb/stb_image.h, lines 7950-7986
+------------------------------------------------------------------------------
+This software is available under 2 licenses -- choose whichever you prefer.
+------------------------------------------------------------------------------
+ALTERNATIVE A - MIT License
+Copyright (c) 2017 Sean Barrett
+Permission is hereby granted, free of charge, to any person obtaining a copy of
+this software and associated documentation files (the "Software"), to deal in
+the Software without restriction, including without limitation the rights to
+use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies
+of the Software, and to permit persons to whom the Software is furnished to do
+so, subject to the following conditions:
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+------------------------------------------------------------------------------
+ALTERNATIVE B - Public Domain (www.unlicense.org)
+This is free and unencumbered software released into the public domain.
+Anyone is free to copy, modify, publish, use, compile, sell, or distribute this
+software, either in source code form or as a compiled binary, for any purpose,
+commercial or non-commercial, and by any means.
+In jurisdictions that recognize copyright laws, the author or authors of this
+software dedicate any and all copyright interest in the software to the public
+domain. We make this dedication for the benefit of the public at large and to
+the detriment of our heirs and successors. We intend this dedication to be an
+overt act of relinquishment in perpetuity of all present and future rights to
+this software under copyright law.
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN
+ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+==============================================================================
+C3. subprocess.h (sheredom)
+    Version:  as vendored in llama.cpp b11624 (commit af0579c78a07a555d84830d01da7b61cfadbc7ef)
+    Licence:  Unlicense
+    Binaries: llama-common.dll, mtmd.dll
+    Text from: llama.cpp b11624 vendor/sheredom/subprocess.h, lines 1-31
+------------------------------------------------------------------------------
+/*
+   The latest version of this library is available on GitHub;
+   https://github.com/sheredom/subprocess.h
+*/
+
+/*
+   This is free and unencumbered software released into the public domain.
+
+   Anyone is free to copy, modify, publish, use, compile, sell, or
+   distribute this software, either in source code form or as a compiled
+   binary, for any purpose, commercial or non-commercial, and by any
+   means.
+
+   In jurisdictions that recognize copyright laws, the author or authors
+   of this software dedicate any and all copyright interest in the
+   software to the public domain. We make this dedication for the benefit
+   of the public at large and to the detriment of our heirs and
+   successors. We intend this dedication to be an overt act of
+   relinquishment in perpetuity of all present and future rights to this
+   software under copyright law.
+
+   THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+   EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+   MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+   IN NO EVENT SHALL THE AUTHORS BE LIABLE FOR ANY CLAIM, DAMAGES OR
+   OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
+   ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+   OTHER DEALINGS IN THE SOFTWARE.
+
+   For more information, please refer to <http://unlicense.org/>
+*/
+
+==============================================================================
+C4. public-domain base64 (common/base64.hpp)
+    Version:  as in llama.cpp b11624 (commit af0579c78a07a555d84830d01da7b61cfadbc7ef)
+    Licence:  Unlicense
+    Binaries: llama-common.dll
+    Text from: llama.cpp b11624 common/base64.hpp, lines 1-26
+------------------------------------------------------------------------------
+/*
+This is free and unencumbered software released into the public domain.
+
+Anyone is free to copy, modify, publish, use, compile, sell, or
+distribute this software, either in source code form or as a compiled
+binary, for any purpose, commercial or non-commercial, and by any
+means.
+
+In jurisdictions that recognize copyright laws, the author or authors
+of this software dedicate any and all copyright interest in the
+software to the public domain. We make this dedication for the benefit
+of the public at large and to the detriment of our heirs and
+successors. We intend this dedication to be an overt act of
+relinquishment in perpetuity of all present and future rights to this
+software under copyright law.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+IN NO EVENT SHALL THE AUTHORS BE LIABLE FOR ANY CLAIM, DAMAGES OR
+OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
+ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+OTHER DEALINGS IN THE SOFTWARE.
+
+For more information, please refer to <http://unlicense.org>
+*/
+
+==============================================================================
+C5. SHA-256 (Igor Pavlov) and SHA-1 (Steve Reid)
+    Version:  as vendored in llama.cpp b11624 (commit af0579c78a07a555d84830d01da7b61cfadbc7ef)
+    Licence:  public domain
+    Binaries: SHA-256: mtmd.dll. SHA-1: not linked (no reference to it)
+    Text from: llama.cpp b11624 vendor/hash/sha256/sha256.c lines 1-3, vendor/hash/sha1/sha1.c lines 2-4
+------------------------------------------------------------------------------
+/* Crypto/Sha256.c -- SHA-256 Hash
+2010-06-11 : Igor Pavlov : Public domain
+This code is based on public domain code from Wei Dai's Crypto++ library. */
+
+SHA-1 in C
+By Steve Reid <steve@edmweb.com>
+100% Public Domain
+
+==============================================================================
+C6. Other components checked, with no separate notice needed
+    - Hedley (Evan Nemerson, CC0-1.0) inside nlohmann/json: preprocessor macros only.
+    - Google Abseil integer_sequence (Apache-2.0) inside nlohmann/json: compiled only
+      when C++14 is unavailable; llama-common is built as C++17, so it is preprocessed out.
+    - whisper.cpp audio code in mtmd.dll: MIT, "The ggml authors" (covered by LICENSE-llama.cpp.txt).
+    - DRY sampler "ported from KoboldCpp" in llama.dll: the original author (pi6am) gave permission and
+      is co-author of llama.cpp PR #9702, so it is contributed under llama.cpp's MIT licence.
+    - Z-algorithm (ivanyu, public domain) in llama.dll; Abramowitz-Stegun erf constants (John D. Cook,
+      public domain) in Vulkan shaders.
+    - OpenVINO exp_ps_sve (Apache-2.0) in ggml-cpu/vec.h: ARM SVE only, not compiled for x64.
+    - KleidiAI (Arm, MIT), SpacemiT kernels: not compiled for x64. LLGuidance: not enabled (stub only).
+    - HF transformers / PyTorch / LLaVA-UHD / segment-anything / mamba URLs: cited as reference
+      implementations; the C++ code is an independent reimplementation.
+    - Microsoft STL headers (Apache-2.0 WITH LLVM-exception; its Ryu/{fmt}/Boost/libc++ parts carry
+      object-code exceptions; its Kempf-derived threading code is in msvcp140.dll, see B8; its
+      Unicode tables serve C++20 <format>, unused here) and MSVC/UCRT static startup code:
+      no notice for compiled code.
+    - LLVM compiler-rt builtins (Apache-2.0 WITH LLVM-exception): no notice for compiled code.
+    - LLVM OpenMP ittnotify (inside libomp.dll): LLVM licence, covered by LICENSE-LLVM-OpenMP.txt.
+    - vulkan-1.dll (Vulkan loader): imported from the system, not redistributed.
+    - msvcp140.dll, vcruntime140.dll, vcruntime140_1.dll (14.44.35211.0) in this folder are not
+      part of the llama.cpp zip or of the gametrans runtime download; gametrans copies them here from
+      its own installation only when Windows has no copies or older ones. They are Microsoft Visual C++
+      redistributable files governed by the
+      Visual Studio licence terms, not by an open-source notice.
+
+==============================================================================
+APPENDIX - Apache License, Version 2.0 (full text)
+    Text from: https://github.com/google/sentencepiece/blob/v0.2.2/LICENSE
+    Applies to: B3 (fiat-crypto, BoringSSL), B7 (SentencePiece)
+------------------------------------------------------------------------------
+                                 Apache License
+                           Version 2.0, January 2004
+                        http://www.apache.org/licenses/
+
+   TERMS AND CONDITIONS FOR USE, REPRODUCTION, AND DISTRIBUTION
+
+   1. Definitions.
+
+      "License" shall mean the terms and conditions for use, reproduction,
+      and distribution as defined by Sections 1 through 9 of this document.
+
+      "Licensor" shall mean the copyright owner or entity authorized by
+      the copyright owner that is granting the License.
+
+      "Legal Entity" shall mean the union of the acting entity and all
+      other entities that control, are controlled by, or are under common
+      control with that entity. For the purposes of this definition,
+      "control" means (i) the power, direct or indirect, to cause the
+      direction or management of such entity, whether by contract or
+      otherwise, or (ii) ownership of fifty percent (50%) or more of the
+      outstanding shares, or (iii) beneficial ownership of such entity.
+
+      "You" (or "Your") shall mean an individual or Legal Entity
+      exercising permissions granted by this License.
+
+      "Source" form shall mean the preferred form for making modifications,
+      including but not limited to software source code, documentation
+      source, and configuration files.
+
+      "Object" form shall mean any form resulting from mechanical
+      transformation or translation of a Source form, including but
+      not limited to compiled object code, generated documentation,
+      and conversions to other media types.
+
+      "Work" shall mean the work of authorship, whether in Source or
+      Object form, made available under the License, as indicated by a
+      copyright notice that is included in or attached to the work
+      (an example is provided in the Appendix below).
+
+      "Derivative Works" shall mean any work, whether in Source or Object
+      form, that is based on (or derived from) the Work and for which the
+      editorial revisions, annotations, elaborations, or other modifications
+      represent, as a whole, an original work of authorship. For the purposes
+      of this License, Derivative Works shall not include works that remain
+      separable from, or merely link (or bind by name) to the interfaces of,
+      the Work and Derivative Works thereof.
+
+      "Contribution" shall mean any work of authorship, including
+      the original version of the Work and any modifications or additions
+      to that Work or Derivative Works thereof, that is intentionally
+      submitted to Licensor for inclusion in the Work by the copyright owner
+      or by an individual or Legal Entity authorized to submit on behalf of
+      the copyright owner. For the purposes of this definition, "submitted"
+      means any form of electronic, verbal, or written communication sent
+      to the Licensor or its representatives, including but not limited to
+      communication on electronic mailing lists, source code control systems,
+      and issue tracking systems that are managed by, or on behalf of, the
+      Licensor for the purpose of discussing and improving the Work, but
+      excluding communication that is conspicuously marked or otherwise
+      designated in writing by the copyright owner as "Not a Contribution."
+
+      "Contributor" shall mean Licensor and any individual or Legal Entity
+      on behalf of whom a Contribution has been received by Licensor and
+      subsequently incorporated within the Work.
+
+   2. Grant of Copyright License. Subject to the terms and conditions of
+      this License, each Contributor hereby grants to You a perpetual,
+      worldwide, non-exclusive, no-charge, royalty-free, irrevocable
+      copyright license to reproduce, prepare Derivative Works of,
+      publicly display, publicly perform, sublicense, and distribute the
+      Work and such Derivative Works in Source or Object form.
+
+   3. Grant of Patent License. Subject to the terms and conditions of
+      this License, each Contributor hereby grants to You a perpetual,
+      worldwide, non-exclusive, no-charge, royalty-free, irrevocable
+      (except as stated in this section) patent license to make, have made,
+      use, offer to sell, sell, import, and otherwise transfer the Work,
+      where such license applies only to those patent claims licensable
+      by such Contributor that are necessarily infringed by their
+      Contribution(s) alone or by combination of their Contribution(s)
+      with the Work to which such Contribution(s) was submitted. If You
+      institute patent litigation against any entity (including a
+      cross-claim or counterclaim in a lawsuit) alleging that the Work
+      or a Contribution incorporated within the Work constitutes direct
+      or contributory patent infringement, then any patent licenses
+      granted to You under this License for that Work shall terminate
+      as of the date such litigation is filed.
+
+   4. Redistribution. You may reproduce and distribute copies of the
+      Work or Derivative Works thereof in any medium, with or without
+      modifications, and in Source or Object form, provided that You
+      meet the following conditions:
+
+      (a) You must give any other recipients of the Work or
+          Derivative Works a copy of this License; and
+
+      (b) You must cause any modified files to carry prominent notices
+          stating that You changed the files; and
+
+      (c) You must retain, in the Source form of any Derivative Works
+          that You distribute, all copyright, patent, trademark, and
+          attribution notices from the Source form of the Work,
+          excluding those notices that do not pertain to any part of
+          the Derivative Works; and
+
+      (d) If the Work includes a "NOTICE" text file as part of its
+          distribution, then any Derivative Works that You distribute must
+          include a readable copy of the attribution notices contained
+          within such NOTICE file, excluding those notices that do not
+          pertain to any part of the Derivative Works, in at least one
+          of the following places: within a NOTICE text file distributed
+          as part of the Derivative Works; within the Source form or
+          documentation, if provided along with the Derivative Works; or,
+          within a display generated by the Derivative Works, if and
+          wherever such third-party notices normally appear. The contents
+          of the NOTICE file are for informational purposes only and
+          do not modify the License. You may add Your own attribution
+          notices within Derivative Works that You distribute, alongside
+          or as an addendum to the NOTICE text from the Work, provided
+          that such additional attribution notices cannot be construed
+          as modifying the License.
+
+      You may add Your own copyright statement to Your modifications and
+      may provide additional or different license terms and conditions
+      for use, reproduction, or distribution of Your modifications, or
+      for any such Derivative Works as a whole, provided Your use,
+      reproduction, and distribution of the Work otherwise complies with
+      the conditions stated in this License.
+
+   5. Submission of Contributions. Unless You explicitly state otherwise,
+      any Contribution intentionally submitted for inclusion in the Work
+      by You to the Licensor shall be under the terms and conditions of
+      this License, without any additional terms or conditions.
+      Notwithstanding the above, nothing herein shall supersede or modify
+      the terms of any separate license agreement you may have executed
+      with Licensor regarding such Contributions.
+
+   6. Trademarks. This License does not grant permission to use the trade
+      names, trademarks, service marks, or product names of the Licensor,
+      except as required for reasonable and customary use in describing the
+      origin of the Work and reproducing the content of the NOTICE file.
+
+   7. Disclaimer of Warranty. Unless required by applicable law or
+      agreed to in writing, Licensor provides the Work (and each
+      Contributor provides its Contributions) on an "AS IS" BASIS,
+      WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or
+      implied, including, without limitation, any warranties or conditions
+      of TITLE, NON-INFRINGEMENT, MERCHANTABILITY, or FITNESS FOR A
+      PARTICULAR PURPOSE. You are solely responsible for determining the
+      appropriateness of using or redistributing the Work and assume any
+      risks associated with Your exercise of permissions under this License.
+
+   8. Limitation of Liability. In no event and under no legal theory,
+      whether in tort (including negligence), contract, or otherwise,
+      unless required by applicable law (such as deliberate and grossly
+      negligent acts) or agreed to in writing, shall any Contributor be
+      liable to You for damages, including any direct, indirect, special,
+      incidental, or consequential damages of any character arising as a
+      result of this License or out of the use or inability to use the
+      Work (including but not limited to damages for loss of goodwill,
+      work stoppage, computer failure or malfunction, or any and all
+      other commercial damages or losses), even if such Contributor
+      has been advised of the possibility of such damages.
+
+   9. Accepting Warranty or Additional Liability. While redistributing
+      the Work or Derivative Works thereof, You may choose to offer,
+      and charge a fee for, acceptance of support, warranty, indemnity,
+      or other liability obligations and/or rights consistent with this
+      License. However, in accepting such obligations, You may act only
+      on Your own behalf and on Your sole responsibility, not on behalf
+      of any other Contributor, and only if You agree to indemnify,
+      defend, and hold each Contributor harmless for any liability
+      incurred by, or claims asserted against, such Contributor by reason
+      of your accepting any such warranty or additional liability.
+
+   END OF TERMS AND CONDITIONS
+
+   APPENDIX: How to apply the Apache License to your work.
+
+      To apply the Apache License to your work, attach the following
+      boilerplate notice, with the fields enclosed by brackets "[]"
+      replaced with your own identifying information. (Don't include
+      the brackets!)  The text should be enclosed in the appropriate
+      comment syntax for the file format. We also recommend that a
+      file or class name and description of purpose be included on the
+      same "printed page" as the copyright notice for easier
+      identification within third-party archives.
+
+   Copyright [yyyy] [name of copyright owner]
+
+   Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
